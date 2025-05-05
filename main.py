@@ -83,7 +83,7 @@ def evaluate(model, loader, device, dataset_df=None, split_name="val"):
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     train_loader, val_loader, test_loader = get_dataloaders(
-        "train.csv", "val.csv", "test.csv", "DATASET", batch_size=32)
+        "train.csv", "val.csv", "test.csv", "DATASET", batch_size=16)
     val_df = pd.read_csv("val.csv")
     test_df = pd.read_csv("test.csv")
 
