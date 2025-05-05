@@ -24,6 +24,15 @@ def load_list(path):
 train_val_files = load_list(train_val_list_path)
 test_files = load_list(test_list_path)
 
+# Limit the total number of images to 500 (350 train, 75 val, 75 test)
+MAX_TOTAL_IMAGES = 500
+MAX_TRAIN_VAL = int(MAX_TOTAL_IMAGES * 0.85)  # 425 images for train+val
+MAX_TEST = MAX_TOTAL_IMAGES - MAX_TRAIN_VAL    # 75 images for test
+
+# Take a subset of the files
+train_val_files = train_val_files[:MAX_TRAIN_VAL]
+test_files = test_files[:MAX_TEST]
+
 # 3. Split train_val into train/val (70/15/15 overall)
 train_files, val_files = train_test_split(train_val_files, test_size=0.1765, random_state=42)  # 0.1765*0.85 ≈ 0.15
 
@@ -36,4 +45,7 @@ write_csv(train_files, 'train.csv')
 write_csv(val_files, 'val.csv')
 write_csv(test_files, 'test.csv')
 
-print('CSV files generated: train.csv, val.csv, test.csv') 
+print(f'CSV files generated with reduced dataset size:')
+print(f'- Training set: {len(train_files)} images')
+print(f'- Validation set: {len(val_files)} images')
+print(f'- Test set: {len(test_files)} images') 
